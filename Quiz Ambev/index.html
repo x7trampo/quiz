@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+          <link rel="shortcut icon" type="image/x-icon" href="images/43.png">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Promoção Ambev - Quiz Exclusivo 🍻</title>
+  <style>
+    :root {
+      --primary: #002776;
+      --secondary: #ffd100;
+      --danger: #ff4c4c;
+      --bg: #f4f4f4;
+      --white: #ffffff;
+      --text: #333333;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    header {
+      background-color: var(--primary);
+      padding: 20px;
+      text-align: center;
+      color: white;
+    }
+
+    header img {
+      width: 130px;
+      margin-bottom: 10px;
+    }
+
+    header h1 {
+      font-size: 1.6rem;
+      font-weight: 500;
+    }
+
+    .counter {
+      background-color: var(--secondary);
+      color: var(--primary);
+      text-align: center;
+      padding: 8px;
+      font-weight: bold;
+      font-size: 0.95rem;
+    }
+
+    .container {
+      flex: 1;
+      max-width: 700px;
+      margin: 20px auto;
+      background: var(--white);
+      padding: 25px;
+      border-radius: 16px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+      animation: fadeIn 1s ease;
+    }
+
+    @keyframes fadeIn {
+      from {opacity: 0; transform: translateY(20px);}
+      to {opacity: 1; transform: translateY(0);}
+    }
+
+    .question {
+      display: none;
+    }
+
+    .question.active {
+      display: block;
+    }
+
+    h2 {
+      color: var(--primary);
+      margin-bottom: 18px;
+      text-align: center;
+    }
+
+    .options {
+      display: grid;
+      gap: 15px;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    }
+
+    .option {
+      background-color: #f9f9f9;
+      border-radius: 10px;
+      cursor: pointer;
+      text-align: center;
+      padding: 10px;
+      border: 2px solid transparent;
+      transition: all 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .option:hover {
+      transform: scale(1.05);
+      border-color: var(--secondary);
+      background-color: var(--secondary);
+    }
+
+    .option img {
+      width: 100%;
+      max-height: 120px;
+      object-fit: cover;
+      border-radius: 8px;
+      margin-bottom: 8px;
+    }
+
+    .promo {
+      background-color: var(--danger);
+      color: white;
+      padding: 10px;
+      border-radius: 10px;
+      text-align: center;
+      font-weight: bold;
+      animation: pulse 1.5s infinite;
+      margin: 20px 0;
+    }
+
+    @keyframes pulse {
+      0% {transform: scale(1);}
+      50% {transform: scale(1.03);}
+      100% {transform: scale(1);}
+    }
+
+    .btn {
+      background-color: var(--primary);
+      color: white;
+      border: none;
+      padding: 12px;
+      border-radius: 10px;
+      cursor: pointer;
+      width: 100%;
+      font-size: 1rem;
+      transition: background-color 0.3s;
+      text-align: center;
+      display: block;
+      text-decoration: none;
+    }
+
+    .btn:hover {
+      background-color: #001f5a;
+    }
+
+    footer {
+      background-color: var(--bg);
+      color: #888;
+      text-align: center;
+      padding: 10px;
+      font-size: 0.8rem;
+    }
+
+    img.caixas {
+      width: 100%;
+      border-radius: 12px;
+      margin: 15px 0;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <img src="images/ambev_logo.webp" alt="Logo Ambev">
+    <h1>Ganhe 5 caixas da sua cerveja preferida 🍺</h1>
+  </header>
+
+  <div class="counter">
+    🔥 <span id="peopleCount">132</span> pessoas estão participando AGORA!
+  </div>
+
+  <div class="container">
+    <div id="quiz">
+      
+      <div class="question active" data-step="1">
+        <h2>Escolha sua cerveja favorita:</h2>
+        <div class="options">
+          <div class="option" onclick="selectBeer('Skol')">
+            <img src="images/skol.webp" alt="Skol">
+            Skol
+          </div>
+          <div class="option" onclick="selectBeer('Brahma')">
+            <img src="images/brahma.png" alt="Brahma">
+            Brahma
+          </div>
+          <div class="option" onclick="selectBeer('Stella Artois')">
+            <img src="images/stella.png" alt="Stella Artois">
+            Stella Artois
+          </div>
+          <div class="option" onclick="selectBeer('Budweiser')">
+            <img src="images/bud.png" alt="Budweiser">
+            Budweiser
+          </div>
+        </div>
+      </div>
+      
+      <div class="question" data-step="2">
+        <h2 id="beerQuestion">Qual é a melhor temperatura para consumir?</h2>
+        <div class="options">
+          <div class="option" onclick="nextQuestion()">-1°C a 1°C</div>
+          <div class="option" onclick="nextQuestion()">2°C a 4°C</div>
+          <div class="option" onclick="nextQuestion()">5°C a 7°C</div>
+        </div>
+      </div>
+      
+      <div class="question" data-step="3">
+        <h2>Quando você costuma consumir?</h2>
+        <div class="options">
+          <div class="option" onclick="nextQuestion()">Finais de semana</div>
+          <div class="option" onclick="nextQuestion()">Reuniões com amigos</div>
+          <div class="option" onclick="nextQuestion()">Quase todo dia</div>
+        </div>
+      </div>
+      
+      <div class="question" data-step="4">
+        <h2>Na hora de escolher, você vai mais pelo...</h2>
+        <div class="options">
+          <div class="option" onclick="nextQuestion()">Preço acessível</div>
+          <div class="option" onclick="nextQuestion()">Sabor marcante e qualidade</div>
+          <div class="option" onclick="nextQuestion()">Algo prático, fácil de beber</div>
+          <div class="option" onclick="nextQuestion()">Uma experiência diferente, fora do comum</div>
+        </div>
+      </div>
+      
+      <div class="question" data-step="5">
+        <h2>Em relação ao teor alcoólico, você prefere...</h2>
+        <div class="options">
+          <div class="option" onclick="nextQuestion()">Leve, pra beber sem preocupação</div>
+          <div class="option" onclick="nextQuestion()">Médio, equilibrado</div>
+          <div class="option" onclick="nextQuestion()">Forte, pra sentir presença!</div>
+          <div class="option" onclick="nextQuestion()">Não ligo muito pra isso, me importa mais o sabor</div>
+        </div>
+      </div>
+      
+      <div class="question" data-step="6">
+        <h2>🎉 Parabéns!</h2>
+        <p>Você foi selecionado para ganhar <strong>5 caixas de <span id="resultBeer"></span></strong>! 🍻</p>
+        <img src="images/caixas_skol.png" alt="5 Caixas de Cerveja" class="caixas">
+        <div class="promo">🚚 Apenas pague o frete! <br>⚡ Oferta válida por tempo LIMITADO!</div>
+        <a href="https://checkout.skol.com" class="btn">Finalizar Pedido</a>
+      </div>
+      
+    </div>
+  </div>
+
+  <footer>
+    © 2025 Ambev. Todos os direitos reservados.
+  </footer>
+
+  <script>
+    // BLOQUEIO DE FERRAMENTAS DE DESENVOLVEDOR
+
+    // Bloqueio de clique direito
+    document.addEventListener('contextmenu', event => event.preventDefault());
+
+    // Bloqueio de teclas comuns
+    document.addEventListener('keydown', function(e) {
+      if (
+        e.key === 'F12' ||
+        (e.ctrlKey && e.shiftKey && ['I', 'J', 'C'].includes(e.key)) ||
+        (e.ctrlKey && e.key === 'U')
+      ) {
+        e.preventDefault();
+        alert('Oferta Desenvolvida por: X7');
+      }
+    });
+
+    // Bloqueio de Salvar Como
+
+    document.addEventListener('keydown', function(e) {
+      if (e.ctrlKey && e.key === 's') {
+        e.preventDefault();
+        alert('Oferta Desenvolvida por: X7');
+      }
+    });
+
+    // Detecção de DevTools ativo
+   (function() {
+  function detectDebugger() {
+    const start = performance.now();
+    debugger;
+    const end = performance.now();
+    if (end - start > 100) {
+      bloquearAcesso();
+    }
+  }
+
+  function detectConsoleOpen() {
+    const elemento = new Image();
+    Object.defineProperty(elemento, 'id', {
+      get: function() {
+        bloquearAcesso();
+      }
+    });
+    console.log('%c', elemento);
+  }
+
+  function bloquearAcesso() {
+    document.body.innerHTML = '<h1 style="color:red;text-align:center;margin-top:50px;">Acesso negado.</h1>';
+    throw new Error('Oferta Desenvolvida por: X7');
+  }
+
+  function loop() {
+    detectDebugger();
+    detectConsoleOpen();
+    requestAnimationFrame(loop);
+  }
+
+  loop();
+})();
+
+    // FUNCIONALIDADE DO QUIZ
+
+    let beer = '';
+    const questions = document.querySelectorAll('.question');
+
+    const beerData = {
+      "Skol": {
+        question: "Qual é a melhor temperatura para servir a Skol?",
+        checkout: "https://pay.pagamentos-ambev.online/QqyLgqoa5MbZvkE",
+        image: "images/caixas_skol.png"
+      },
+      "Brahma": {
+        question: "Qual é a melhor temperatura para servir a Brahma?",
+        checkout: "https://pay.pagamentos-ambev.online/nWrxGWAYXzw3654",
+        image: "images/caixas_brahma.png"
+      },
+      "Stella Artois": {
+        question: "Qual é a melhor temperatura para servir a Stella Artois?",
+        checkout: "https://pay.pagamentos-ambev.online/lDW0ZaJ5Lz8GN7E",
+        image: "images/caixas_stella.png"
+      },
+      "Budweiser": {
+        question: "Qual é a melhor temperatura para servir a Budweiser?",
+        checkout: "https://pay.pagamentos-ambev.online/JqoR32bwVEJ3Vj5",
+        image: "images/caixas_bud.png"
+      }
+    };
+
+    function selectBeer(selected) {
+      beer = selected;
+      const beerInfo = beerData[beer];
+      document.getElementById('beerQuestion').innerText = beerInfo.question;
+      nextQuestion();
+    }
+
+    function nextQuestion() {
+      const current = document.querySelector('.question.active');
+      const next = current.nextElementSibling;
+      if (next) {
+        current.classList.remove('active');
+        next.classList.add('active');
+      }
+
+      if (next && next.dataset.step === "6") {
+        document.getElementById('resultBeer').innerText = beer;
+        const beerInfo = beerData[beer];
+        document.querySelector('.question[data-step="6"] img').src = beerInfo.image;
+        document.querySelector('.question[data-step="6"] a.btn').href = beerInfo.checkout;
+      }
+    }
+
+    let count = 132;
+    setInterval(() => {
+      const variation = Math.floor(Math.random() * 5) - 2;
+      count = Math.max(120, count + variation);
+      document.getElementById('peopleCount').innerText = count;
+    }, 3000);
+  </script>
+
+</body>
+</html>
